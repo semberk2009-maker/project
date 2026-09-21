@@ -1,0 +1,745 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #121212;
+    color: #ffffff;
+    padding-bottom: 100px;
+}
+
+/* ===== SIDEBAR ===== */
+#sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 70px;
+    height: 100%;
+    background: #000000;
+    padding: 12px;
+    transition: width 0.3s ease;
+    z-index: 1000;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+#menu-toggle:checked ~ #sidebar {
+    width: 260px;
+}
+
+/* ===== DISC-KNOP ===== */
+#sidebar-toggle {
+    width: 45px;
+    height: 45px;
+    cursor: pointer;
+    user-select: none;
+    flex-shrink: 0;
+    display: block;
+}
+
+.disc {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: #1a1a1a;
+    border: 2px solid #888;
+    position: relative;
+    animation: spin 3s linear infinite;
+    animation-play-state: paused;
+}
+
+.disc::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 26px;
+    height: 26px;
+    border: 1px solid #555;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.disc-label {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 14px;
+    height: 14px;
+    background: #e8e8e8;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.disc-hole {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 4px;
+    height: 4px;
+    background: #1a1a1a;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+}
+
+#menu-toggle:checked ~ #sidebar .disc {
+    animation-play-state: running;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+}
+
+/* ===== HOME-KNOP (LOS, naast sidebar) ===== */
+.home-knop {
+    position: fixed;
+    top: 12px;
+    left: 82px;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #1a1a1a;
+    border: 2px solid #888;
+    color: #e8e8e8;
+    text-decoration: none;
+    z-index: 1001;
+    transition: left 0.3s ease, background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+#menu-toggle:checked ~ .home-knop {
+    left: 272px;
+}
+
+.home-knop:hover {
+    background: #282828;
+    color: #fff;
+    border-color: #bbb;
+}
+
+.home-knop svg {
+    width: 22px;
+    height: 22px;
+}
+
+/* ===== HEADER ===== */
+header {
+    height: 64px;
+    background: #000000;
+    margin-left: 70px;
+    transition: margin-left 0.3s ease;
+    position: sticky;
+    top: 0;
+    z-index: 500;
+}
+
+#menu-toggle:checked ~ header {
+    margin-left: 260px;
+}
+
+h2 {
+    margin: 20px;
+    margin-left: 90px;
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    transition: margin-left 0.3s ease;
+    padding-top: 50px;
+}
+
+#menu-toggle:checked ~ h2 {
+    margin-left: 280px;
+}
+
+/* ===== PLAYLIST GRID ===== */
+.playlist-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 24px;
+    padding: 24px;
+    margin-left: 70px;
+    transition: margin-left 0.3s ease;
+}
+
+#menu-toggle:checked ~ .playlist-container {
+    margin-left: 260px;
+}
+
+.playlist-blok {
+    display: flex;
+    flex-direction: column;
+    background: #181818;
+    text-decoration: none;
+    color: #ffffff;
+    padding: 16px;
+    transition: background 0.3s;
+    position: relative;
+}
+
+.playlist-blok:hover {
+    background: #282828;
+}
+
+.playlist-foto {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background: #282828;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+}
+
+.playlist-foto img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.playlist-foto-placeholder {
+    font-size: 60px;
+    color: #535353;
+    font-weight: 300;
+}
+
+.playlist-foto-placeholder.groot {
+    font-size: 100px;
+}
+
+.playlist-naam {
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: capitalize;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* ===== PLAYLIST HEADER (playlist.php) ===== */
+.playlist-header {
+    display: flex;
+    align-items: flex-end;
+    gap: 24px;
+    padding: 24px 24px 24px 94px;
+    background: linear-gradient(180deg, #2a2a2a 0%, #121212 100%);
+    transition: margin-left 0.3s ease;
+    min-height: 240px;
+    padding-top: 80px;
+}
+
+#menu-toggle:checked ~ .playlist-header {
+    margin-left: 190px;
+}
+
+/* ===== KLIKBARE COVER ===== */
+.cover-form {
+    margin: 0;
+    flex-shrink: 0;
+}
+
+.playlist-header-foto {
+    position: relative;
+    cursor: pointer;
+    width: 200px;
+    height: 200px;
+    background: #282828;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    box-shadow: 0 12px 32px rgba(0,0,0,0.6);
+    transition: transform 0.2s;
+}
+
+.playlist-header-foto:hover {
+    transform: scale(1.02);
+}
+
+.playlist-header-foto:hover .cover-hint {
+    opacity: 1;
+}
+
+.cover-hint {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 12px;
+    background: rgba(0, 0, 0, 0.75);
+    color: #fff;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    opacity: 0;
+    transition: opacity 0.2s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.playlist-header-foto img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.upload-melding {
+    font-size: 13px;
+    color: #f87171;
+    margin-top: 6px;
+}
+
+.playlist-header-info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.playlist-type {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.playlist-header-info h1 {
+    font-size: 72px;
+    font-weight: 900;
+    margin: 0;
+    letter-spacing: -2px;
+    text-transform: capitalize;
+    line-height: 1;
+}
+
+.playlist-aantal {
+    font-size: 14px;
+    color: #b3b3b3;
+}
+
+/* ===== PLAYLIST ACTIES (favoriet-hartje) ===== */
+.playlist-acties {
+    display: flex;
+    justify-content: flex-end;
+    padding: 8px 24px 8px 0;
+    margin-top: -40px;
+    transition: padding-right 0.3s ease;
+    position: relative;
+    z-index: 10;
+}
+
+#menu-toggle:checked ~ .playlist-acties {
+    padding-right: 24px;
+}
+
+.favoriet-form {
+    margin: 0;
+}
+
+.favoriet-knop {
+    background: none;
+    border: none;
+    color: #6a6a6a;
+    cursor: pointer;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s, transform 0.2s;
+    opacity: 0.7;
+}
+
+.favoriet-knop:hover {
+    color: #b3b3b3;
+    opacity: 1;
+    transform: scale(1.05);
+}
+
+.favoriet-knop.actief {
+    color: #1ed760;
+    opacity: 1;
+}
+
+.favoriet-knop.actief:hover {
+    color: #1fdf64;
+}
+
+/* ===== FAVORIETEN IN SIDEBAR ===== */
+.sidebar-favorieten {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    margin-top: 20px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 4px;
+    flex: 1;
+}
+
+.sidebar-favorieten::-webkit-scrollbar {
+    width: 6px;
+}
+
+.sidebar-favorieten::-webkit-scrollbar-thumb {
+    background: #333;
+}
+
+.sidebar-fav {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px;
+    text-decoration: none;
+    color: #b3b3b3;
+    transition: background 0.2s, color 0.2s;
+    flex-shrink: 0;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.sidebar-fav:hover {
+    background: #1a1a1a;
+    color: #ffffff;
+}
+
+.sidebar-fav.actief {
+    background: #1a1a1a;
+    color: #ffffff;
+}
+
+.sidebar-fav-foto {
+    width: 38px;
+    height: 38px;
+    background: #282828;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    overflow: hidden;
+    color: #535353;
+    font-size: 18px;
+}
+
+.sidebar-fav-foto img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.sidebar-fav-naam {
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: capitalize;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    opacity: 0;
+    width: 0;
+    transition: opacity 0.2s ease, width 0.3s ease;
+}
+
+#menu-toggle:checked ~ #sidebar .sidebar-fav-naam {
+    opacity: 1;
+    width: auto;
+}
+
+/* ===== NUMMER-LIJST ===== */
+.nummer-lijst {
+    margin-left: 70px;
+    padding: 24px;
+    padding-left: 0;
+    transition: margin-left 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+#menu-toggle:checked ~ .nummer-lijst {
+    margin-left: 260px;
+}
+
+.nummer-rij {
+    display: flex;
+    align-items: center;
+    padding: 12px 30px;
+    transition: background 0.2s;
+}
+
+.nummer-rij:hover {
+    background: #1a1a1a;
+}
+
+.nummer-index {
+    width: 24px;
+    color: #b3b3b3;
+    font-size: 16px;
+    text-align: right;
+    flex-shrink: 0;
+    margin-right: 20px;
+}
+
+.nummer-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    overflow: hidden;
+    flex: 1;
+}
+
+.nummer-titel {
+    font-size: 16px;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.nummer-artiest {
+    font-size: 13px;
+    color: #b3b3b3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* ===== NUMMER PLAY-KNOP (schuift open bij hover) ===== */
+.nummer-play {
+    width: 0;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ffffff;
+    color: #000000;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    flex-shrink: 0;
+    opacity: 0;
+    overflow: hidden;
+    padding: 0;
+    margin: 0;
+    transition: width 0.2s ease, opacity 0.2s ease, margin 0.2s ease;
+}
+
+.nummer-rij:hover .nummer-play {
+    width: 36px;
+    opacity: 1;
+    margin-right: 16px;
+}
+
+.nummer-play:hover {
+    background: #f0f0f0;
+    transform: scale(1.08);
+}
+
+.nummer-play svg {
+    fill: #000000;
+    margin-left: 2px;
+    flex-shrink: 0;
+}
+
+/* ===== NUMMER DUUR ===== */
+.nummer-duur {
+    font-size: 13px;
+    color: #b3b3b3;
+    font-variant-numeric: tabular-nums;
+    margin-left: auto;
+    padding-left: 20px;
+}
+
+/* ===== MELDINGEN ===== */
+.leeg-melding {
+    margin-left: 90px;
+    color: #b3b3b3;
+    transition: margin-left 0.3s ease;
+}
+
+#menu-toggle:checked ~ .leeg-melding {
+    margin-left: 280px;
+}
+
+/* ===== VASTE PLAYBAR ===== */
+.playbar {
+    position: fixed;
+    bottom: 0;
+    left: 60px;
+    width: 100%;
+    height: 72px;
+    background: #181818;
+    border-top: 1px solid #282828;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 0 20px;
+    z-index: 950;
+}
+
+.playbar-foto {
+    width: 50px;
+    height: 50px;
+    background: #282828;
+    flex-shrink: 0;
+}
+
+.playbar-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    overflow: hidden;
+    min-width: 120px;
+}
+
+.playbar-titel {
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.playbar-artiest {
+    font-size: 12px;
+    color: #b3b3b3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* ===== VOORTGANGSBALK ===== */
+.playbar-progress {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+    max-width: 600px;
+    margin: 0 20px;
+}
+
+.playbar-tijd {
+    font-size: 12px;
+    color: #b3b3b3;
+    min-width: 36px;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+}
+
+.playbar-bar {
+    flex: 1;
+    height: 4px;
+    background: #4d4d4d;
+    border-radius: 2px;
+    overflow: hidden;
+    position: relative;
+}
+
+.playbar-bar-fill {
+    height: 100%;
+    width: 0%;
+    background: #ffffff;
+    border-radius: 2px;
+}
+
+/* ===== PLAYBAR KNOPPEN ===== */
+.playbar-knoppen {
+    margin-left: auto;
+    display: flex;
+    gap: 8px;
+}
+
+.playbar-knop {
+    background: none;
+    border: none;
+    color: #b3b3b3;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 8px 12px;
+    transition: color 0.2s;
+}
+
+.playbar-knop:hover {
+    color: #fff;
+}
+
+/* ===== NUMMER FORMULIER ===== */
+.nummer-form {
+    max-width: 400px;
+    padding: 20px;
+}
+
+.nummer-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: #b3b3b3;
+}
+
+.nummer-form input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 16px;
+    background: #282828;
+    border: 1px solid #333;
+    color: #fff;
+    font-size: 15px;
+}
+
+.nummer-form input:focus {
+    outline: none;
+    border-color: #1ed760;
+}
+
+.nummer-form button {
+    background: #1ed760;
+    color: #000;
+    border: none;
+    padding: 12px 24px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.2s;
+}
+
+.nummer-form button:hover {
+    background: #1fdf64;
+    transform: scale(1.03);
+}
+/* ===== PROFIEL-KNOP (rechts bovenin) ===== */
+.profiel-knop {
+    position: fixed;
+    top: 12px;
+    right: 12px;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #1a1a1a;
+    border: 2px solid #888;
+    border-radius: 50%;
+    color: #e8e8e8;
+    text-decoration: none;
+    z-index: 1001;
+    transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.2s;
+}
+
+.profiel-knop:hover {
+    background: #282828;
+    color: #fff;
+    border-color: #bbb;
+    transform: scale(1.05);
+}
+
+.profiel-knop svg {
+    width: 22px;
+    height: 22px;
+}
